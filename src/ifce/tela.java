@@ -30,7 +30,8 @@ public class tela extends javax.swing.JFrame {
 
     ControleTela controle = new ControleTela();
     DefaultListModel ambList = new DefaultListModel();
-    DefaultListModel disList = new DefaultListModel();
+    DefaultListModel dispList = new DefaultListModel();
+    DefaultListModel userList = new DefaultListModel();
     private JButton buttonExcluir;
 
     //add a lista
@@ -84,6 +85,11 @@ public class tela extends javax.swing.JFrame {
         });
 
         usuarioButton.setText("Usuário");
+        usuarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarioButtonActionPerformed(evt);
+            }
+        });
 
         ambienteList.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -108,6 +114,11 @@ public class tela extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(dispositivoList);
 
+        usuarioList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usuarioListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(usuarioList);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -169,7 +180,7 @@ public class tela extends javax.swing.JFrame {
 
     private void dispositivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispositivoButtonActionPerformed
         //Cria um novo dispositivo
-        addArgumentToList(controle.criarDispositivo(), disList, dispositivoList);
+        addArgumentToList(controle.criarDispositivo(), dispList, dispositivoList);
     }//GEN-LAST:event_dispositivoButtonActionPerformed
 
     private void ambienteListAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ambienteListAncestorAdded
@@ -188,31 +199,78 @@ public class tela extends javax.swing.JFrame {
 
         // Mostre a caixa de diálogo
         int escolha = JOptionPane.showOptionDialog(null, panel, "Informações do " + dispositivoList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
-        
+
         //Trata a opção que o usuario escolheu
         if (escolha == 0) {
-            controle.excluirDispositivo();
+            controle.excluirDispositivo(dispositivoList.getSelectedValue());
+            //atualizar a lista
+            int index = dispositivoList.getSelectedIndex();
+            dispList.removeElementAt(index);
         } else if (escolha == 1) {
             controle.moverDispositivo(dispositivoList.getSelectedValue(), txtAmb.getText());
-        }else if (escolha == 2) {
-            
+        } else if (escolha == 2) {
+
         }
-        
+
     }//GEN-LAST:event_dispositivoListMouseClicked
 
     private void ambienteListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ambienteListMouseClicked
         // Crie um painel personalizado contendo a mensagem e os botões
         Object[] opcoes = {"Excluir Ambiente", "Cancelar"};
-        
+
         // Mostre a caixa de diálogo
-        int escolha = JOptionPane.showOptionDialog(null, controle.listarDispositivo(ambienteList.getSelectedValue()), "Informações do " + ambienteList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
-        
+        int escolha = JOptionPane.showOptionDialog(null, controle.listarDispositivo(ambienteList.getSelectedValue()) + controle.listarUsuario(ambienteList.getSelectedValue()), "Informações do " + ambienteList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
+
         //Trata a opção que o usuario escolheu
         if (escolha == 0) {
-            controle.excluirAmbiente();
+
+            if (controle.contadorDispositivos(ambienteList.getSelectedValue()) == 0) {
+                controle.excluirAmbiente(ambienteList.getSelectedValue());
+
+                //atualizar a lista
+                int index = ambienteList.getSelectedIndex();
+                ambList.removeElementAt(index);
+            } else {
+                //Warning
+                JLabel lblMessage = new JLabel("Antes de destruir o ambiente, remova todos os dispositivos e usuários.");
+                Object[] texts = {lblMessage};
+                JOptionPane.showMessageDialog(null, texts);
+            }
+
         }
 
     }//GEN-LAST:event_ambienteListMouseClicked
+
+    private void usuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioButtonActionPerformed
+        //Cria um novo usuario
+        addArgumentToList(controle.criarUsuario(), userList, usuarioList);
+    }//GEN-LAST:event_usuarioButtonActionPerformed
+
+    private void usuarioListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioListMouseClicked
+        // Crie um JTextField
+        JTextField txtAmb1 = new JTextField("amb");
+
+        // Crie um painel personalizado contendo a mensagem, o JTextField e os botões
+        Object[] opcoes = {"Excluir Usuário", "Mover Usuário", "Cancelar"};
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel("Escolha uma opção:"), BorderLayout.NORTH);
+        panel.add(txtAmb1, BorderLayout.CENTER);
+
+        // Mostre a caixa de diálogo
+        int escolha = JOptionPane.showOptionDialog(null, panel, "Informações do " + usuarioList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
+
+        //Trata a opção que o usuario escolheu
+        if (escolha == 0) {
+            controle.excluirDispositivo(dispositivoList.getSelectedValue());
+            //atualizar a lista
+            int index = usuarioList.getSelectedIndex();
+            userList.removeElementAt(index);
+        } else if (escolha == 1) {
+            controle.moverUsuario(usuarioList.getSelectedValue(), txtAmb1.getText());
+        } else if (escolha == 2) {
+
+        }
+    }//GEN-LAST:event_usuarioListMouseClicked
 
     /**
      * @param args the command line arguments

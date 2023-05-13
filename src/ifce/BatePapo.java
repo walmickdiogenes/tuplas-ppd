@@ -79,6 +79,7 @@ public class BatePapo {
             Lookup finder = new Lookup(JavaSpace.class);
             JavaSpace space = (JavaSpace) finder.getService();
             if (space == null) {
+                
                     System.out.println("O servico JavaSpace nao foi encontrado. Encerrando...");
                     System.exit(-1);
             } 

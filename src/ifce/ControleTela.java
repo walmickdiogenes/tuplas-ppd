@@ -94,6 +94,32 @@ public class ControleTela {
         }
         return null;
     }
+    
+        public String criarUsuario() {
+        String finalName;
+        try {
+            User usuario = new User();
+            int userIndex = 0;
+
+            while (true) {
+                userIndex += 1;
+                String userName = "user" + userIndex;
+                usuario.nome = userName;
+                User tempUser = (User) space.read(usuario, null, JavaSpace.NO_WAIT);
+
+                if (tempUser == null) {
+                    space.write(usuario, null, Lease.FOREVER);
+                    System.out.println("\r\nUsuario registrado como: " + usuario.nome);
+                    finalName = userName;
+                    break;
+                }
+            }
+            return finalName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void moverDispositivo(String nome, String novoAmb) {
         try {
@@ -136,12 +162,93 @@ public class ControleTela {
         return nomesDispositivos;
     }
     
-    public void excluirAmbiente () {
-        System.out.println("excluit");
+    public int contadorDispositivos(String ambNome){
+        try {
+            List<Dispositivo> listaDisp = Helpers.listaDispositivo(space, ambNome);
+            return listaDisp.size();
+        } catch (Exception ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
     
-    public void excluirDispositivo () {
-        System.out.println("excluit");
+    public void excluirAmbiente(String oldNome) {
+        try {
+            Ambiente oldAmb = new Ambiente();
+            oldAmb.nome = oldNome;
+            space.take(oldAmb, null, JavaSpace.NO_WAIT);
+            System.out.println("\r\nAmbiente " + oldNome + " destruido");
+            
+       
+        } catch (UnusableEntryException | TransactionException | InterruptedException | RemoteException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void excluirDispositivo(String oldNome) {
+        try {
+            Dispositivo oldDisp = new Dispositivo();
+            oldDisp.nome = oldNome;
+            space.take(oldDisp, null, JavaSpace.NO_WAIT);
+            System.out.println("\r\nDispositivo " + oldNome + " destruido");
+
+        } catch (UnusableEntryException | TransactionException | InterruptedException | RemoteException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+     public void moverUsuario(String nome, String novoAmb) {
+        try {
+            User oldUser = new User();
+            oldUser.nome = nome;
+            User usuario = (User) space.take(oldUser, null, JavaSpace.NO_WAIT);
+
+            oldUser.amb = novoAmb;
+            space.write(oldUser, null, Lease.FOREVER);
+            System.out.println("\r\nUsuario " + nome + " movido para o ambiente " + novoAmb);
+
+        } catch (UnusableEntryException | TransactionException | InterruptedException | RemoteException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+        public String listarUsuario(String ambNome) {
+        String nomesUsuarios = "";
+        String nomesUsuariosNull = ". Não existe nenhum usuário no ambiente";
+        try {
+            List<User> listaUser = Helpers.listaUsuario(space, ambNome);
+            for (int i = 0; i < listaUser.size(); i++) {
+                nomesUsuarios += listaUser.get(i).nome;
+                if (i < listaUser.size() - 1) {
+                    nomesUsuarios += ", ";
+                }
+            }
+            System.out.println(nomesUsuarios);
+            nomesUsuarios = ". Esses são os dispositivos que estão no ambiente: " + nomesUsuarios;
+
+            if (listaUser.size() == 0) {
+                nomesUsuarios = nomesUsuariosNull;
+            }
+
+            listaUser.clear();
+        } catch (Exception ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nomesUsuarios;
+    }
+        
+        public void excluirUsuario(String oldNome) {
+        try {
+            User oldUser = new User();
+            oldUser.nome = oldNome;
+            space.take(oldUser, null, JavaSpace.NO_WAIT);
+            System.out.println("\r\nUsuario " + oldUser + " destruido");
+
+        } catch (UnusableEntryException | TransactionException | InterruptedException | RemoteException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
-

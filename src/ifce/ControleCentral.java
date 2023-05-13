@@ -28,7 +28,7 @@ public class ControleCentral {
                 System.out.println("1 - Criar ambiente"); //ok
                 System.out.println("2 - Destruir ambiente");
                 System.out.println("3 - Criar dispositivo"); //ok
-                System.out.println("4 - Destruir dispositivo");
+                System.out.println("4 - Destruir dispositivo");//ok
                 System.out.println("5 - Mover dispositivo"); //ok
                 System.out.println("6 - Listar todos os ambientes existentes"); //ok
                 System.out.println("7 - Listar todos os dispositivos de um ambiente");//ok
@@ -63,7 +63,7 @@ public class ControleCentral {
                             }
                             break;
                         }
-
+///////////////////////////////////////////////////////////////////////////////////////
                         case "2":
                         {
                             List<Ambiente> listaAmb = Helpers.listaAmbiente(space);
@@ -130,7 +130,7 @@ public class ControleCentral {
                             destruiveis.clear();
                             break;
                         }
-
+//////////////////////////////////////////////////////////////////////////////////////
                         case "3":
                         {
                             Dispositivo novoDisp = new Dispositivo();
