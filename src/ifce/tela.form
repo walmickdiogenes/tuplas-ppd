@@ -30,27 +30,22 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="ambienteButton" alignment="2" min="-2" pref="89" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" alignment="2" min="-2" pref="88" max="-2" attributes="0"/>
-                          <Component id="ambienteButtonExcluir" alignment="2" min="-2" pref="86" max="-2" attributes="0"/>
-                          <Component id="excluirButton" alignment="2" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="dispositivoButton" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" alignment="2" min="-2" pref="89" max="-2" attributes="0"/>
-                          <Component id="dispositivoButtonExcluir" alignment="2" min="-2" pref="89" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="usuarioButton" pref="89" max="32767" attributes="0"/>
-                          <Component id="jScrollPane3" max="32767" attributes="0"/>
-                          <Component id="usuarioButtonExcluir" alignment="0" pref="89" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="usuarioButton" alignment="0" pref="89" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel1" min="-2" pref="98" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" pref="98" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" pref="98" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,17 +68,7 @@
                   <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jLabel3" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="ambienteButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="dispositivoButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="usuarioButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="excluirButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,6 +86,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Dispositivo"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dispositivoButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="usuarioButton">
       <Properties>
@@ -117,15 +105,13 @@
         <Component class="javax.swing.JList" name="ambienteList">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="ambienteListAncestorAdded"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ambienteListMouseClicked"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -142,15 +128,12 @@
         <Component class="javax.swing.JList" name="dispositivoList">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="dispositivoListMouseClicked"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -167,13 +150,7 @@
         <Component class="javax.swing.JList" name="usuarioList">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -182,14 +159,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="ambienteButtonExcluir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ambiente"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ambienteButtonExcluirActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -205,32 +174,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ver"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="excluir"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="dispositivoButtonExcluir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dispositivo"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="usuarioButtonExcluir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="excluirButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Excluir"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excluirButtonActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

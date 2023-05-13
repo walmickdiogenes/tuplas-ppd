@@ -4,14 +4,41 @@
  */
 package ifce;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.Action;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author walmi
  */
 public class tela extends javax.swing.JFrame {
-    
+
+    ControleTela controle = new ControleTela();
+    DefaultListModel ambList = new DefaultListModel();
+    DefaultListModel disList = new DefaultListModel();
+    private JButton buttonExcluir;
+
+    //add a lista
+    private void addArgumentToList(String argument, DefaultListModel listModel, JList list) {
+        list.setModel(listModel);
+        listModel.addElement(argument);
+    }
+
     /**
      * Creates new form tela
      */
@@ -37,13 +64,8 @@ public class tela extends javax.swing.JFrame {
         dispositivoList = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         usuarioList = new javax.swing.JList<>();
-        ambienteButtonExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        dispositivoButtonExcluir = new javax.swing.JButton();
-        usuarioButtonExcluir = new javax.swing.JButton();
-        excluirButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,56 +77,44 @@ public class tela extends javax.swing.JFrame {
         });
 
         dispositivoButton.setText("Dispositivo");
+        dispositivoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispositivoButtonActionPerformed(evt);
+            }
+        });
 
         usuarioButton.setText("Usuário");
 
-        ambienteList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        ambienteList.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                ambienteListAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        ambienteList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ambienteListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(ambienteList);
 
-        dispositivoList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        dispositivoList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dispositivoListMouseClicked(evt);
+            }
         });
         jScrollPane2.setViewportView(dispositivoList);
 
-        usuarioList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane3.setViewportView(usuarioList);
-
-        ambienteButtonExcluir.setText("Ambiente");
-        ambienteButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ambienteButtonExcluirActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("criar");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("ver");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("excluir");
-
-        dispositivoButtonExcluir.setText("Dispositivo");
-
-        usuarioButtonExcluir.setText("Usuário");
-
-        excluirButton.setText("Excluir");
-        excluirButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                excluirButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,23 +126,18 @@ public class tela extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(ambienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ambienteButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(excluirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(dispositivoButton)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dispositivoButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(usuarioButton, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)
-                            .addComponent(usuarioButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(usuarioButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,33 +156,63 @@ public class tela extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ambienteButtonExcluir)
-                    .addComponent(dispositivoButtonExcluir)
-                    .addComponent(usuarioButtonExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(excluirButton)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ambienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ambienteButtonActionPerformed
-
-
+        //Cria um novo ambiente
+        addArgumentToList(controle.criarAmbiente(), ambList, ambienteList);
     }//GEN-LAST:event_ambienteButtonActionPerformed
 
-    private void ambienteButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ambienteButtonExcluirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ambienteButtonExcluirActionPerformed
+    private void dispositivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispositivoButtonActionPerformed
+        //Cria um novo dispositivo
+        addArgumentToList(controle.criarDispositivo(), disList, dispositivoList);
+    }//GEN-LAST:event_dispositivoButtonActionPerformed
 
-    private void excluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirButtonActionPerformed
+    private void ambienteListAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ambienteListAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_excluirButtonActionPerformed
+    }//GEN-LAST:event_ambienteListAncestorAdded
+
+    private void dispositivoListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dispositivoListMouseClicked
+        // Crie um JTextField
+        JTextField txtAmb = new JTextField("amb");
+
+        // Crie um painel personalizado contendo a mensagem, o JTextField e os botões
+        Object[] opcoes = {"Excluir Dispositivo", "Mover Dispositivo", "Cancelar"};
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel("Escolha uma opção:"), BorderLayout.NORTH);
+        panel.add(txtAmb, BorderLayout.CENTER);
+
+        // Mostre a caixa de diálogo
+        int escolha = JOptionPane.showOptionDialog(null, panel, "Informações do " + dispositivoList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
+        
+        //Trata a opção que o usuario escolheu
+        if (escolha == 0) {
+            controle.excluirDispositivo();
+        } else if (escolha == 1) {
+            controle.moverDispositivo(dispositivoList.getSelectedValue(), txtAmb.getText());
+        }else if (escolha == 2) {
+            
+        }
+        
+    }//GEN-LAST:event_dispositivoListMouseClicked
+
+    private void ambienteListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ambienteListMouseClicked
+        // Crie um painel personalizado contendo a mensagem e os botões
+        Object[] opcoes = {"Excluir Ambiente", "Cancelar"};
+        
+        // Mostre a caixa de diálogo
+        int escolha = JOptionPane.showOptionDialog(null, controle.listarDispositivo(ambienteList.getSelectedValue()), "Informações do " + ambienteList.getSelectedValue(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
+        
+        //Trata a opção que o usuario escolheu
+        if (escolha == 0) {
+            controle.excluirAmbiente();
+        }
+
+    }//GEN-LAST:event_ambienteListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -216,20 +251,15 @@ public class tela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ambienteButton;
-    private javax.swing.JButton ambienteButtonExcluir;
     private javax.swing.JList<String> ambienteList;
     private javax.swing.JButton dispositivoButton;
-    private javax.swing.JButton dispositivoButtonExcluir;
     private javax.swing.JList<String> dispositivoList;
-    private javax.swing.JButton excluirButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton usuarioButton;
-    private javax.swing.JButton usuarioButtonExcluir;
     private javax.swing.JList<String> usuarioList;
     // End of variables declaration//GEN-END:variables
 }
