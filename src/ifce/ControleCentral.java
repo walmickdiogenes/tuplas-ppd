@@ -1,3 +1,6 @@
+// !!!!!!!!!!!!!!!!!!!
+// Todo esse codigo esta sendo migrado para o ControleTela
+
 package ifce;
 import net.jini.space.JavaSpace;
 import net.jini.core.lease.Lease;
@@ -22,13 +25,13 @@ public class ControleCentral {
             while (true) {
                 System.out.println("\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
                 System.out.println("MENU");
-                System.out.println("1 - Criar ambiente");
+                System.out.println("1 - Criar ambiente"); //ok
                 System.out.println("2 - Destruir ambiente");
-                System.out.println("3 - Criar dispositivo");
+                System.out.println("3 - Criar dispositivo"); //ok
                 System.out.println("4 - Destruir dispositivo");
-                System.out.println("5 - Mover dispositivo");
-                System.out.println("6 - Listar todos os ambientes existentes");
-                System.out.println("7 - Listar todos os dispositivos de um ambiente");
+                System.out.println("5 - Mover dispositivo"); //ok
+                System.out.println("6 - Listar todos os ambientes existentes"); //ok
+                System.out.println("7 - Listar todos os dispositivos de um ambiente");//ok
                 System.out.println("8 - Lista todos os usuarios em um ambiente");
                 
                 System.out.println("\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
@@ -374,7 +377,7 @@ public class ControleCentral {
 
                             break;
                         }
-
+//////////
                         case "7":
                         {
                             List<Dispositivo> listaNullDisp = Helpers.listaDispositivo(space, null);
@@ -439,7 +442,7 @@ public class ControleCentral {
                             pesquisaveis.clear();
                             break;
                         }
-
+////////////////
                         case "8":
                         {
                             List<User> listaNullUser = Helpers.listaUsuario(space, null);
