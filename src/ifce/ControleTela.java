@@ -94,8 +94,8 @@ public class ControleTela {
         }
         return null;
     }
-    
-        public String criarUsuario() {
+
+    public String criarUsuario() {
         String finalName;
         try {
             User usuario = new User();
@@ -161,8 +161,8 @@ public class ControleTela {
         }
         return nomesDispositivos;
     }
-    
-    public int contadorDispositivos(String ambNome){
+
+    public int contadorDispositivos(String ambNome) {
         try {
             List<Dispositivo> listaDisp = Helpers.listaDispositivo(space, ambNome);
             return listaDisp.size();
@@ -171,15 +171,14 @@ public class ControleTela {
         }
         return 0;
     }
-    
+
     public void excluirAmbiente(String oldNome) {
         try {
             Ambiente oldAmb = new Ambiente();
             oldAmb.nome = oldNome;
             space.take(oldAmb, null, JavaSpace.NO_WAIT);
             System.out.println("\r\nAmbiente " + oldNome + " destruido");
-            
-       
+
         } catch (UnusableEntryException | TransactionException | InterruptedException | RemoteException ex) {
             Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -197,8 +196,8 @@ public class ControleTela {
         }
 
     }
-    
-     public void moverUsuario(String nome, String novoAmb) {
+
+    public void moverUsuario(String nome, String novoAmb) {
         try {
             User oldUser = new User();
             oldUser.nome = nome;
@@ -213,8 +212,8 @@ public class ControleTela {
         }
 
     }
-    
-        public String listarUsuario(String ambNome) {
+
+    public String listarUsuario(String ambNome) {
         String nomesUsuarios = "";
         String nomesUsuariosNull = ". Não existe nenhum usuário no ambiente";
         try {
@@ -238,8 +237,40 @@ public class ControleTela {
         }
         return nomesUsuarios;
     }
-        
-        public void excluirUsuario(String oldNome) {
+
+    //Mesma função de listar usuarios porem retornando array no layout (user1, user2)   
+    public String listarUsuarioBatePapo(String nomeUsuario) {
+        String nomesUsuarios = "";
+        try {
+            User user = Helpers.encontraUsuario(space, nomeUsuario);
+            String ambNome = user.amb;
+
+            List<User> listaUser = Helpers.listaUsuario(space, ambNome);
+            for (int i = 0; i < listaUser.size(); i++) {
+                nomesUsuarios += listaUser.get(i).nome;
+                if (i < listaUser.size() - 1) {
+                    nomesUsuarios += ", ";
+                }
+            }
+            listaUser.clear();
+        } catch (Exception ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nomesUsuarios;
+    }
+
+    public String ambUsuarioBatePapo(String nomeUsuario) {
+        String ambienteNome = "";
+        try {
+            User user = Helpers.encontraUsuario(space, nomeUsuario);
+            ambienteNome = user.amb;
+        } catch (Exception ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ambienteNome;
+    }
+
+    public void excluirUsuario(String oldNome) {
         try {
             User oldUser = new User();
             oldUser.nome = oldNome;
@@ -250,5 +281,47 @@ public class ControleTela {
             Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void enviarMensagem(String nomeTo, String usuario, String ambAtual, String mensagemBP) {
+        try {
+            Mensagem novaMsg = new Mensagem();
+            novaMsg.time = System.currentTimeMillis();
+            novaMsg.from = usuario;
+            novaMsg.to = nomeTo;
+            novaMsg.amb = ambAtual;
+            novaMsg.msg = mensagemBP;
+
+            space.write(novaMsg, null, Lease.FOREVER);
+            System.out.println("\r\nMensagem enviada a " + nomeTo);
+        } catch (TransactionException | RemoteException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String receberMensagem(String usuario, String ambAtual) {
+        String mensagem = "";
+        try {
+            Mensagem msgTemplate = new Mensagem();
+            msgTemplate.to = usuario;
+            msgTemplate.amb = ambAtual;
+
+            Mensagem novaMsg = (Mensagem) space.take(msgTemplate, null, JavaSpace.NO_WAIT);
+
+            if (novaMsg == null) {
+                System.out.println("\r\nNao ha novas mensagens");
+            } else {
+                System.out.println();
+
+                while (novaMsg != null) {
+                    mensagem = novaMsg.from + ": " + novaMsg.msg;
+                    novaMsg = (Mensagem) space.take(msgTemplate, null, JavaSpace.NO_WAIT);
+                    
+                }
+            }
+        } catch (RemoteException | UnusableEntryException | TransactionException | InterruptedException ex) {
+            Logger.getLogger(ControleTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mensagem;
     }
 }

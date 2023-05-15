@@ -32,7 +32,6 @@ public class tela extends javax.swing.JFrame {
     DefaultListModel ambList = new DefaultListModel();
     DefaultListModel dispList = new DefaultListModel();
     DefaultListModel userList = new DefaultListModel();
-    private JButton buttonExcluir;
 
     //add a lista
     private void addArgumentToList(String argument, DefaultListModel listModel, JList list) {
@@ -40,6 +39,21 @@ public class tela extends javax.swing.JFrame {
         listModel.addElement(argument);
     }
 
+    //envia as informações de usuario para a tela de bate papo
+    public String[] exibirListaNaTela() {
+        String elementos = controle.listarUsuarioBatePapo(usuarioList.getSelectedValue());
+        return elementos.split(", ");
+    }
+    
+    public String usuarioConectade(){
+        String usuarioConectade = usuarioList.getSelectedValue();
+        return usuarioConectade;
+    }
+
+    public JList<String> getUsuarioList() {
+        return usuarioList;
+    }
+   
     /**
      * Creates new form tela
      */
@@ -176,6 +190,7 @@ public class tela extends javax.swing.JFrame {
     private void ambienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ambienteButtonActionPerformed
         //Cria um novo ambiente
         addArgumentToList(controle.criarAmbiente(), ambList, ambienteList);
+        
     }//GEN-LAST:event_ambienteButtonActionPerformed
 
     private void dispositivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispositivoButtonActionPerformed
@@ -194,7 +209,7 @@ public class tela extends javax.swing.JFrame {
         // Crie um painel personalizado contendo a mensagem, o JTextField e os botões
         Object[] opcoes = {"Excluir Dispositivo", "Mover Dispositivo", "Cancelar"};
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Escolha uma opção:"), BorderLayout.NORTH);
+        panel.add(new JLabel("Escolha um ambiente:"), BorderLayout.NORTH);
         panel.add(txtAmb, BorderLayout.CENTER);
 
         // Mostre a caixa de diálogo
@@ -244,6 +259,7 @@ public class tela extends javax.swing.JFrame {
     private void usuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioButtonActionPerformed
         //Cria um novo usuario
         addArgumentToList(controle.criarUsuario(), userList, usuarioList);
+        //System.out.println(exibirListaNaTela());
     }//GEN-LAST:event_usuarioButtonActionPerformed
 
     private void usuarioListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioListMouseClicked
@@ -251,9 +267,9 @@ public class tela extends javax.swing.JFrame {
         JTextField txtAmb1 = new JTextField("amb");
 
         // Crie um painel personalizado contendo a mensagem, o JTextField e os botões
-        Object[] opcoes = {"Excluir Usuário", "Mover Usuário", "Cancelar"};
+        Object[] opcoes = {"Excluir Usuário", "Mover Usuário", "Iniciar Bate Papo", "Cancelar"};
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Escolha uma opção:"), BorderLayout.NORTH);
+        panel.add(new JLabel("Escolha um ambiente:"), BorderLayout.NORTH);
         panel.add(txtAmb1, BorderLayout.CENTER);
 
         // Mostre a caixa de diálogo
@@ -268,6 +284,12 @@ public class tela extends javax.swing.JFrame {
         } else if (escolha == 1) {
             controle.moverUsuario(usuarioList.getSelectedValue(), txtAmb1.getText());
         } else if (escolha == 2) {
+            chat novoBatePapo = new chat();
+            novoBatePapo.setUsuarioConectade(usuarioList.getSelectedValue());
+            novoBatePapo.setAmbNome(controle.ambUsuarioBatePapo(usuarioList.getSelectedValue()));
+            
+            novoBatePapo.setVisible(true);
+        } else if (escolha == 3) {
 
         }
     }//GEN-LAST:event_usuarioListMouseClicked

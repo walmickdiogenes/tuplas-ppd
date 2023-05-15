@@ -123,9 +123,9 @@ public class BatePapo {
                 System.out.println("MENU");
                 System.out.println("1 - Enviar mensagem");
                 System.out.println("1 - Receber novas mensagens");
-                System.out.println("3 - Mudar de ambiente");
-                System.out.println("4 - Listar todos os ambientes existentes");
-                System.out.println("5 - Listar todos os dispositivos no ambiente atual");
+                System.out.println("3 - Mudar de ambiente"); //ok
+                System.out.println("4 - Listar todos os ambientes existentes"); //ok
+                System.out.println("5 - Listar todos os dispositivos no ambiente atual"); //ok
                 System.out.println("6 - Lista todos os usuarios no ambiente atual");
                 
                 System.out.println("\r\n\r\n\r\n\r\n\r\n\r\n\r\n");

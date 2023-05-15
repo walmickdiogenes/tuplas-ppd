@@ -1,4 +1,5 @@
 package ifce;
+
 import net.jini.space.JavaSpace;
 import net.jini.core.lease.Lease;
 
@@ -32,11 +33,11 @@ public class Helpers {
     }
 
     public static List<Dispositivo> listaDispositivo(JavaSpace space, String amb) throws Exception {
-        List<Dispositivo> listaDisp= new ArrayList<Dispositivo>();
+        List<Dispositivo> listaDisp = new ArrayList<Dispositivo>();
         Dispositivo template = new Dispositivo();
         Dispositivo disp;
 
-        if (amb != "" ) {
+        if (amb != "") {
             template.amb = amb;
         }
 
@@ -48,15 +49,15 @@ public class Helpers {
             }
         } while (disp != null);
 
-        for (int i = listaDisp.size()-1; i >= 0; i--) {
+        for (int i = listaDisp.size() - 1; i >= 0; i--) {
             disp = listaDisp.get(i);
             space.write(disp, null, Lease.FOREVER);
-            
+
             if (amb == null && disp.amb != null) {
                 listaDisp.remove(disp);
             }
         }
-        
+
         return listaDisp;
     }
 
@@ -65,11 +66,11 @@ public class Helpers {
     }
 
     public static List<User> listaUsuario(JavaSpace space, String amb) throws Exception {
-        List<User> listaUser= new ArrayList<User>();
+        List<User> listaUser = new ArrayList<User>();
         User template = new User();
         User user;
 
-        if (amb != "" ) {
+        if (amb != "") {
             template.amb = amb;
         }
 
@@ -81,7 +82,7 @@ public class Helpers {
             }
         } while (user != null);
 
-        for (int i = listaUser.size()-1; i >= 0; i--) {
+        for (int i = listaUser.size() - 1; i >= 0; i--) {
             user = listaUser.get(i);
             space.write(user, null, Lease.FOREVER);
 
@@ -91,6 +92,13 @@ public class Helpers {
         }
 
         return listaUser;
+    }
+
+    public static User encontraUsuario(JavaSpace space, String nomeUsuario) throws Exception {
+        User template = new User();
+        template.nome = nomeUsuario;
+        return (User) space.read(template, null, JavaSpace.NO_WAIT);
+
     }
 
 }
