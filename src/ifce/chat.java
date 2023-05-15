@@ -194,7 +194,8 @@ public class chat extends javax.swing.JFrame {
 
     private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
         tela.controle.enviarMensagem(usuariosList.getSelectedValue(), usuarioConectade, ambNome, mensagemTextField.getText());
-
+        String mensagem = usuarioConectade + ": " +  mensagemTextField.getText() + "\n";
+        mensagemArea.append(mensagem);
     }//GEN-LAST:event_enviarButtonActionPerformed
 
     private void mensagemTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mensagemTextFieldActionPerformed

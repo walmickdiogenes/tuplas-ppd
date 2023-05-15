@@ -314,7 +314,7 @@ public class ControleTela {
                 System.out.println();
 
                 while (novaMsg != null) {
-                    mensagem = novaMsg.from + ": " + novaMsg.msg;
+                    mensagem = novaMsg.from + ": " + novaMsg.msg + "\n";
                     novaMsg = (Mensagem) space.take(msgTemplate, null, JavaSpace.NO_WAIT);
                     
                 }
